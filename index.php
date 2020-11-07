@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php
+require_once 'library/Templates.php';
+require_once 'library/Database.php';
+
+$link = db_connect();
+$data = get_templates($link);
+?>
 <html>
     <header>
         <meta charset="UTF-8">
@@ -6,10 +13,9 @@
     </header>
     <body>
         <?php
-            $data = scandir('templates');
             foreach ($data as $val): 
         ?>
-        <div class="doc"><a href="/form.php?template=<? echo $val?>"><? echo $val?></a></div>
+        <div class="doc"><a href="/form.php?template=<? echo $val['file_name']?>"><? echo $val['name']?></a></div>
         <?php endforeach;?>
     </body>
 </html>
