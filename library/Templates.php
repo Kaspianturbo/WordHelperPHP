@@ -20,7 +20,7 @@ function get_templates($link)
 }
 
 //Повертає список полів та їх характеристик
-//Другим аргументом передається назва шаблону. НЕ НАЗВА ФАЙЛУ!!!!
+//Другим аргументом передається назва файлу. НЕ НАЗВА ШАБЛОНУ!!!!
 function get_fields_by_name($link, $name)
 {
     $t = "SELECT `name`, `description`, `isRequired`, `isComputing`, `type` FROM `field` WHERE template_name = '%s';";
@@ -48,25 +48,25 @@ function new_template_and_fields($link, $template, $fields)
     $t = "INSERT INTO `template`(`name`, `file_name`, `date`) VALUES ('%s', '%s', CURRENT_DATE());";
 
     $query = sprintf($t, 
-        mysql_real_escape_string($link, $template->name), 
-        mysql_real_escape_string($link, $template->fileName)
+        $template[1],
+        $template[0]
     );
 
     $result = mysqli_query($link, $query);
 
     $n = count($fields);
 
-    for ($i = 0; $i < $n; $i++)
+    for ($i = 0; $i < $n / 5; $i++)
     {
         $t = "INSERT INTO `field` (`id`, `template_name`, `name`, `description`, `isRequired`, `isComputing`, `type`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');";
 
         $query = sprintf($t, 
-            mysql_real_escape_string($link, $template->fileName), 
-            mysql_real_escape_string($link, $fields[i]->name),
-            mysql_real_escape_string($link, $fields[i]->descr),
-            mysql_real_escape_string($link, $fields[i]->isRequired),
-            mysql_real_escape_string($link, $fields[i]->isComputing),
-            mysql_real_escape_string($link, $fields[i]->type)
+            $template[0], 
+            $fields[$i * 5 + 0],
+            $fields[$i * 5 + 1],
+            $fields[$i * 5 + 2],
+            $fields[$i * 5 + 3],
+            $fields[$i * 5 + 4]
         );
 
         $result = mysqli_query($link, $query);

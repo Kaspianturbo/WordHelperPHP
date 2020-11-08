@@ -7,6 +7,7 @@ require_once 'library/Database.php';
 $template = $_GET['template'];
 $link = db_connect();
 $fields = get_fields_by_name($link, $template);
+
 ?>
 <html>
     <header>
