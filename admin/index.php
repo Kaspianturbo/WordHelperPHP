@@ -9,7 +9,7 @@
     </header>
     <body>
         <form method="POST" action="fillTemplate.php" enctype="multipart/form-data">
-            <input name="filename" type="file">
+            <input name="filename" type="file" required>
             <input type="submit" value="завантажити">
         </form>
     </body>

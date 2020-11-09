@@ -75,20 +75,4 @@ function new_template_and_fields($link, $template, $fields)
     }
     return true;
 }
-
-class Template
-{
-    public $name;
-    public $fileName;
-    public $date;
-}
-
-class Field
-{
-    public $name;
-    public $descr;
-    public $isRequired;
-    public $isComputing;
-    public $type;
-}
 ?>

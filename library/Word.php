@@ -125,7 +125,7 @@ class Word {
 					
 				}
 			}
-			$pattern_var = '/\${([a-z]+)}/';
+			$pattern_var = '/\${([a-zA-Z0-9]+)}/';
 			$vars = array();
 			preg_match_all($pattern_var, $text, $vars);
 		}
