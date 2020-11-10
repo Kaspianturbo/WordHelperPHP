@@ -9,6 +9,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </header>
     <body>
+    <nav class="navbar navbar-dark bg-primary mb-3">
+    <div class="container">
+        <h1 class="text-light">Сторінка адміністратора</h1>
+    </div>
+    </nav>
         <div class="container w-25 mt-5">
             <form method="POST" action="fillTemplate.php" enctype="multipart/form-data">
                 <div class="input-group">

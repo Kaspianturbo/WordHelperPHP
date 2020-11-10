@@ -3,7 +3,7 @@
 //Отримуємо список шаблонів (видима користувачу назва, назва файлу)
 function get_templates($link)
 {
-    $query = "SELECT `name`, `file_name` FROM `template`";
+    $query = "SELECT `name`, `file_name`, `description` FROM `template`";
     $result = mysqli_query($link, $query);
 
     if(!$result) die(mysqli_error($link));

@@ -5,16 +5,14 @@ require_once '../library/Templates.php';
 
 $tmp_name = $_FILES['filename']['tmp_name'];
 $name = $_FILES['filename']['name'];
-if(move_uploaded_file($tmp_name, '../templates/'.$name))
+if(!move_uploaded_file($tmp_name, '../templates/'.$name))
 {
-    echo 'done';
+    echo 'failed';
 }
-else echo 'failed';
 
 $word= new Word();
 $fields = $word->readAllPatterns($name)[1];
 $n = count($fields);
-print_r($fields);
 ?>
 <html>
     <header>
@@ -23,6 +21,11 @@ print_r($fields);
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </header>
     <body>
+    <nav class="navbar navbar-dark bg-primary mb-3">
+    <div class="container">
+        <h1 class="text-light">Сторінка адміністратора</h1>
+    </div>
+    </nav>
     <div class="container">
     <form method="POST" action="createTemplate.php">
         <label for="fileName">Ім'я файлу</label>

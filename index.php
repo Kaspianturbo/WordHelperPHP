@@ -5,7 +5,6 @@ require_once 'library/Database.php';
 
 $link = db_connect();
 $data = get_templates($link);
-
 ?>
 <html>
     <header>
@@ -15,6 +14,11 @@ $data = get_templates($link);
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </header>
     <body>
+    <nav class="navbar navbar-dark bg-primary mb-3">
+      <div class="container">
+        <h1 class="text-light">Заповнення документів</h1>
+      </div>
+    </nav>
       <div class="container">
         <div class="row">
           <div class="col-4">
@@ -28,6 +32,7 @@ $data = get_templates($link);
             <div class="tab-content" id="nav-tabContent">
               <?php foreach ($data as $key=>$val):?>
               <div class="tab-pane fade <?if($key==0) echo ('show active');?>" id="list-home<?echo $key?>" role="tabpanel" aria-labelledby="list-home-list<?echo $key?>">
+                <p><? echo $val['description']?></p>  
                 <iframe src=<?echo "http://wordhelperphp/form.php?template=".$val['file_name']?>></iframe>
               </div>
             <?php endforeach;?>
