@@ -20,14 +20,12 @@ $fields = get_fields_by_name($link, $template);
             <input class="form-control" name="template" type="hidden" value="<? echo $template?>" readonly >
             <?php
                 foreach ($fields as $val): 
-                    if ($val['isComputing'] == 'false')
-                    {
             ?>
             <div class="form-group">
             <label for="<? echo $val['name']?>"><? echo $val['description']?></label>
             <input class="form-control" name="<? echo $val['name']?>" type="<?echo $val['type']?>" <?if ($val['isRequired'] == 'true') echo 'required'?>>
             </div>
-            <?php } endforeach;?>
+            <?php endforeach;?>
             <input type="submit" class="btn btn-primary mb-2" value="завантажити">
         </form>
     </body>

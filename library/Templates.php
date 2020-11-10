@@ -23,7 +23,7 @@ function get_templates($link)
 //Другим аргументом передається назва файлу. НЕ НАЗВА ШАБЛОНУ!!!!
 function get_fields_by_name($link, $name)
 {
-    $t = "SELECT `name`, `description`, `isRequired`, `isComputing`, `type` FROM `field` WHERE template_name = '%s';";
+    $t = "SELECT `name`, `description`, `isRequired`, `type` FROM `field` WHERE template_name = '%s';";
 
     $query = sprintf($t, $name);
 
@@ -45,28 +45,28 @@ function get_fields_by_name($link, $name)
 //Добавляє в БД новий шаблон і його поля
 function new_template_and_fields($link, $template, $fields)
 {
-    $t = "INSERT INTO `template`(`name`, `file_name`, `date`) VALUES ('%s', '%s', CURRENT_DATE());";
+    $t = "INSERT INTO `template`(`name`, `file_name`, `description`, `date`) VALUES ('%s', '%s', '%s', CURRENT_DATE());";
 
     $query = sprintf($t, 
         $template[1],
-        $template[0]
+        $template[0],
+        $template[2]
     );
 
     $result = mysqli_query($link, $query);
 
     $n = count($fields);
 
-    for ($i = 0; $i < $n / 5; $i++)
+    for ($i = 0; $i < $n / 4; $i++)
     {
-        $t = "INSERT INTO `field` (`id`, `template_name`, `name`, `description`, `isRequired`, `isComputing`, `type`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s', '%s');";
+        $t = "INSERT INTO `field` (`id`, `template_name`, `name`, `description`, `isRequired`, `type`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s');";
 
         $query = sprintf($t, 
             $template[0], 
-            $fields[$i * 5 + 0],
-            $fields[$i * 5 + 1],
-            $fields[$i * 5 + 2],
-            $fields[$i * 5 + 3],
-            $fields[$i * 5 + 4]
+            $fields[$i * 4 + 0],
+            $fields[$i * 4 + 1],
+            $fields[$i * 4 + 2],
+            $fields[$i * 4 + 3]
         );
 
         $result = mysqli_query($link, $query);
