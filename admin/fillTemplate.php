@@ -17,6 +17,7 @@ $n = count($fields);
 <html>
     <header>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="..\css\main.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     </header>
@@ -36,16 +37,22 @@ $n = count($fields);
         <input class="form-control" name="description" type="text"></br>
         <div style="display: flex; flex-direction: row;">
             <div class="w-25">Поля вставки</div>
-            <div class="w-25">Опис</div>
-            <div class="w-25">Обов'язкове</div>
+            <div class="w-100">Опис</div>
             <div class="w-25">Тип</div>
+            <div class="w-25 text-center">Обов'язкове</div>
         </div>
         <? for ($i = 0; $i < $n; $i++):?>
         <div style="display: flex; flex-direction: row;">
-            <input class="form-control" name="fieldName<?echo $i + 1?>" type="text" value="<?echo $fields[$i]?>" readonly>
-            <input class="form-control" name="description<?echo $i + 1?>" type="text" required>
-            <input class="form-control" name="isRequired<?echo $i + 1?>" type="text" required>
-            <input class="form-control" name="type<?echo $i + 1?>" type="text" required>
+            <input class="form-control w-25" name="fieldName<?echo $i + 1?>" type="text" value="<?echo $fields[$i]?>" readonly>
+            <input class="form-control w-100" name="description<?echo $i + 1?>" type="text" required>
+            <select class="custom-select w-25" name="type<?echo $i + 1?>">
+                <option value="text">Текст</option>
+                <option value="date">Дата</option>
+                <option value="number">Номер</option>
+                <option value="tel">Телефон</option>
+            </select>
+            <input type='hidden' value='Ні' name="isRequired<?echo $i + 1?>">
+            <input class="form-control w-25" value='Так' name="isRequired<?echo $i + 1?>" type="checkbox" checked>
         </div>
         <? endfor;?></br>
         <input class="btn btn-primary mb-2" type="submit" value="завантажити">

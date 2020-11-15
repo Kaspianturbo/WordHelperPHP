@@ -59,7 +59,7 @@ function new_template_and_fields($link, $template, $fields)
 
     for ($i = 0; $i < $n / 4; $i++)
     {
-        $t = "INSERT INTO `field` (`id`, `template_name`, `name`, `description`, `isRequired`, `type`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s');";
+        $t = "INSERT INTO `field` (`id`, `template_name`, `name`, `description`, `type`, `isRequired`) VALUES (NULL, '%s', '%s', '%s', '%s', '%s');";
 
         $query = sprintf($t, 
             $template[0], 
