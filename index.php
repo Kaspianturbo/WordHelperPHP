@@ -4,7 +4,9 @@ require_once 'library/Templates.php';
 require_once 'library/Database.php';
 
 $link = db_connect();
-$data = get_templates($link);
+$objects = get_templates($link);
+
+foreach ($objects as $object) $data[]=$object;
 ?>
 <html>
     <header>
@@ -28,7 +30,7 @@ $data = get_templates($link);
           <div class="col-4">
             <div class="list-group" id="list-tab" role="tablist">
               <?php foreach ($data as $key=>$val):?>
-              <a class="list-group-item list-group-item-action <?if($key==0) echo ('active');?>" id="list-home-list<?echo $key?>" data-toggle="list" href="#list-home<?echo $key?>" role="tab" aria-controls="home"><? echo $val['name']?></a>
+              <a class="list-group-item list-group-item-action <?if($key==0) echo ('active');?>" id="list-home-list<?echo $key?>" data-toggle="list" href="#list-home<?echo $key?>" role="tab" aria-controls="home"><? echo $val->name?></a>
               <?php endforeach;?>
             </div>
           </div>
@@ -36,8 +38,8 @@ $data = get_templates($link);
             <div class="tab-content" id="nav-tabContent">
               <?php foreach ($data as $key=>$val):?>
               <div class="tab-pane fade <?if($key==0) echo ('show active');?>" id="list-home<?echo $key?>" role="tabpanel" aria-labelledby="list-home-list<?echo $key?>">
-                <p><? echo $val['description']?></p>  
-                <iframe src=<?echo "http://wordhelperphp/form.php?template=".$val['file_name']?>></iframe>
+                <p><? echo $val->description?></p>  
+                <iframe src=<?echo "http://wordhelperphp/form.php?template=".$val->file_name?>></iframe>
               </div>
             <?php endforeach;?>
           </div>

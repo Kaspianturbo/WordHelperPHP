@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <?php
-require_once "library/Word.php";
 require_once 'library/Templates.php';
 require_once 'library/Database.php';
 
 $template = $_GET['template'];
 $link = db_connect();
 $fields = get_fields_by_name($link, $template);
-
 ?>
 <html>
     <header>
@@ -23,11 +21,11 @@ $fields = get_fields_by_name($link, $template);
         <form method="POST" action="generate.php">
             <input class="form-control" name="template" type="hidden" value="<? echo $template?>" readonly >
             <?php
-                foreach ($fields as $val): 
+                foreach ($fields as $field): 
             ?>
             <div class="form-group">
-            <label for="<? echo $val['name']?>"><? echo $val['description']?></label>
-            <input class="form-control" name="<? echo $val['name']?>" type="<?echo $val['type']?>" <?if ($val['isRequired'] == 'Так') echo 'required'?>>
+            <label for="<? echo $field->name?>"><? echo $field->description?></label>
+            <input class="form-control" name="<? echo $field->name?>" type="<?echo $field->type?>" <?if ($field->isRequired == 'Так') echo 'required'?>>
             </div>
             <?php endforeach;?>
             <input type="submit" class="btn btn-primary mb-2" value="завантажити">

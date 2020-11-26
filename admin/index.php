@@ -24,7 +24,7 @@
                 <div class="input-group">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" name="filename" required>
-                        <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                        <label class="custom-file-label" for="inputGroupFile04">Вибрати файл</label>
                     </div>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Далі</button>

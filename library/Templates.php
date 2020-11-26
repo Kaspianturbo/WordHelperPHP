@@ -1,9 +1,12 @@
 <?php
 
+require_once $_SERVER['DOCUMENT_ROOT'].'\model\Template.php';
+require_once $_SERVER['DOCUMENT_ROOT'].'\model\Field.php';
+
 //Отримуємо список шаблонів (видима користувачу назва, назва файлу)
 function get_templates($link)
 {
-    $query = "SELECT `name`, `file_name`, `description` FROM `template`";
+    $query = "SELECT `name`, `file_name`, `description`, `date` FROM `template`";
     $result = mysqli_query($link, $query);
 
     if(!$result) die(mysqli_error($link));
@@ -14,7 +17,14 @@ function get_templates($link)
     for ($i = 0; $i < $n; $i++)
     {
         $row = mysqli_fetch_assoc($result);
-        $templates[] = $row;
+        $template = new Template
+        (
+            $row[name],
+            $row[file_name],
+            $row[description],
+            $row[date]
+        );
+        $templates[] = $template;
     }
     return $templates;
 }
@@ -37,7 +47,14 @@ function get_fields_by_name($link, $name)
     for ($i = 0; $i < $n; $i++)
     {
         $row = mysqli_fetch_assoc($result);
-        $fields[] = $row;
+        $field = new Field(
+            $name,
+            $row[name],
+            $row[description],
+            $row[isRequired],
+            $row[type]
+        );
+        $fields[] = $field;
     }
     return $fields;
 }
