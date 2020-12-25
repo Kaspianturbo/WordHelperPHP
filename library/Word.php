@@ -9,7 +9,6 @@ class Word {
 	{		
 		//шлях до шаблону
     	$tmp_patch=realpath(__DIR__."/../templates/".$data['template']);
-		
 		//перевірка наявності шаблону
 		if ($tmp_patch == false) 
 		{
@@ -109,25 +108,56 @@ class Word {
 		$vars = null;
 		$io = \PhpOffice\PhpWord\IOFactory::load(realpath(__DIR__."/../templates/".$template));
 		$sections = $io->getSections();
+		$text = '';
+		$i=0;
 		foreach ($sections as $key => $value) {
-			$sectionElement = $value->getElements();	
-			$text = '';
-			foreach ($sectionElement as $elementKey => $elementValue) {
-				if ($elementValue instanceof \PhpOffice\PhpWord\Element\TextRun) {
+			$sectionElement = $value->getElements();
+			foreach ($sectionElement as $elementKey => $elementValue) 
+			{
+				if ($elementValue instanceof \PhpOffice\PhpWord\Element\TextRun) 
+				{
 					$secondSectionElement = $elementValue->getElements();
-					
-					foreach ($secondSectionElement as $secondSectionElementKey => $secondSectionElementValue) {
-						if ($secondSectionElementValue instanceof \PhpOffice\PhpWord\Element\Text) {
+					foreach ($secondSectionElement as $secondSectionElementKey => $secondSectionElementValue) 
+					{
+						if ($secondSectionElementValue instanceof \PhpOffice\PhpWord\Element\Text) 
+						{
 							$text = $text.$secondSectionElementValue->getText();
-							
 						}
 					}
 					
 				}
+				if ($elementValue instanceof \PhpOffice\PhpWord\Element\ListItem) 
+				{		
+					$text = $text.$elementValue->getText();
+				}
+				if ($elementValue instanceof PhpOffice\PhpWord\Element\Table)
+    			{
+    				foreach ($elementValue->getRows() as $row)
+    				{
+    				    foreach ($row->getCells() as $cell)
+    				    {
+							foreach ($cell->getElements() as $cEl)
+							{
+								if ($cEl instanceof PhpOffice\PhpWord\Element\Text)
+    				            {
+    				                $text = $text.$cEl->getText();
+    				            }
+								elseif ($cEl instanceof PhpOffice\PhpWord\Element\TextRun)
+								{
+    				                if (count($cEl->getElements())>0 and $cEl->getElements()[0] instanceof PhpOffice\PhpWord\Element\Text)
+    				                {
+    				                    $text = $text.$cEl->getElements()[0]->getText();
+    				                }
+    				            }
+							}     
+    				    }
+    				}
+    			}
 			}
 			$pattern_var = '/\${([a-zA-Z0-9]+)}/';
 			$vars = array();
 			preg_match_all($pattern_var, $text, $vars);
+
 		}
 		return $vars;
 	}
