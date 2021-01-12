@@ -2,7 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'].'/library/Word.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/library/Templates.php';
 require_once $_SERVER['DOCUMENT_ROOT'].'/library/Database.php';
-
+error_reporting(E_ERROR | E_PARSE);
 $link = db_connect();
 
 $tmp_name = $_FILES['filename']['tmp_name'];
@@ -20,9 +20,21 @@ if(!move_uploaded_file($tmp_name, '../templates/'.$name))
 }
 
 $word = new Word();
-$fields = $word->readAllPatterns($name)[1];
-$fields = array_unique($fields);
-$n = count($fields);
+$n = 0;
+try
+{
+    $fields = $word->readAllPatterns($name)[1];
+    $fields = array_unique($fields);
+    $n = count($fields);
+}
+catch(Exception $e)
+{
+    error_log("Invalid file. Can'n open file by PHPWord library\n".$e);
+    $file_path = $_SERVER['DOCUMENT_ROOT'].'/templates/'.$name;
+    unlink($file_path);
+    $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/admin';
+    header("Location: ".$url);
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,7 +74,6 @@ $n = count($fields);
                 <option value="text">Текст</option>
                 <option value="date">Дата</option>
                 <option value="number">Номер</option>
-                <option value="tel">Телефон</option>
             </select>
             <input type='hidden' value='Ні' name="isRequired<?echo $i + 1?>">
             <input class="form-control w-25" value='Так' name="isRequired<?echo $i + 1?>" type="checkbox" checked>
@@ -75,8 +86,4 @@ $n = count($fields);
         </form>
     </div> 
     </body>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 </html>

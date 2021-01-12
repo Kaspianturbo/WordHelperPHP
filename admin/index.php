@@ -16,10 +16,7 @@ $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../css/main.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="../js/admin.js"></script>
     </header>
     <body>
         <nav class="navbar navbar-dark bg-primary mb-3">
@@ -32,11 +29,11 @@ $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP
             <form method="POST" action="fillTemplate.php" enctype="multipart/form-data">
                 <div class="input-group">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon01" name="filename" required>
-                        <label class="custom-file-label" for="inputGroupFile04">Вибрати файл</label>
+                        <input type="file" onChange="setCurrentFile()" class="custom-file-input" id="inputFile" aria-describedby="inputGroupFileAddon01" name="filename" required>
+                        <label class="custom-file-label" for="inputFile">Вибрати файл</label>
                     </div>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon01">Завантажити</button>
+                        <button class="btn btn-outline-secondary"  onClick="return validate();" type="submit" id="inputGroupFileAddon01">Завантажити</button>
                     </div>
                 </div>
             </form>
@@ -70,7 +67,7 @@ $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP
                         ?>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Видалити</button>
+                        <button class="btn btn-outline-secondary" onClick="return confirmAction()" type="submit" id="inputGroupFileAddon04">Видалити</button>
                     </div>
                 </div>
             </form>
@@ -87,17 +84,11 @@ $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP
                         ?>
                     </select>
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" id="inputGroupFileAddon04">Видалити</button>
+                        <button class="btn btn-outline-secondary" onClick="return confirmAction()" type="submit" id="inputGroupFileAddon04">Видалити</button>
                     </div>
                 </div>
             </form>
             <a href="<?echo $url?>">Вернутися на головну</a>
         </div>
-        <script>
-        $(".custom-file-input").on("change", function() {
-            var fileName = $(this).val().split("\\").pop();
-            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-        });
-        </script>
     </body>
 </html>
